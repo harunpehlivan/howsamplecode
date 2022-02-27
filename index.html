@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <?php $IPATH = $_SERVER["DOCUMENT_ROOT"]."/assets/php/"; 
+    include($IPATH."meta.html"); ?>
+    <title>Show HTML, CSS, and JavaScript Code Examples</title>
+    <!-- Facebook OpenGraph developers.facebook.com/docs/reference/opengraph/ -->
+
+    <style>
+        textarea {
+            width: 90%;
+        }
+
+        #answer {
+            margin: 0;
+            width: 90%;
+            padding: 1%;
+        }
+
+        #converted {
+            font-family: monospace;
+            width: 96%;
+            height: auto;
+            border: solid 1px silver;
+            padding: 1%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <?php include($IPATH."headernav.html"); ?>
+    <article>
+        <h1 style="font-size:140%;">Show Code in your Web Page</h1>
+        <p>If you want to show actual HTML, CSS, and JavaScript code on your page, as a coding example, an easy way is to convert
+            all of the &lt; characters to &amp;lt;, and convert all of the &gt; to &amp;gt;, and so forth. Of course, that
+            would be a pain to do by hand. So instead you can paste your sample code into the box below. Then click the Go.
+            You'' see some weird looking content below the button. Copy / paste that goofy-looking stuff into your page,
+            save the page, the open it in a browser. In the browser the goofy-looking stuff should look like your original
+            code.
+        </p>
+        <h2>Your Original Code</h2>
+        <textarea id="source" rows="10"></textarea>
+        <br>
+        <button id="btnGo">Go</button>
+        <div id="answer">
+            <p>Okay, thanks. Now you can copy / paste the weird-looking stuff below into your HTML page, anywhere between the
+                &lt;body&gt;...&lt;/body&gt; tags, wherever you want to show the code example. In the browser it will look
+                like normal HTML, CSS, and JavaScript code.</p>
+            <div id="converted">
+
+            </div>
+        </div>
+        <?php include($IPATH."comments.html"); ?>
+    </article>
+    <?php include($IPATH."footer.html"); ?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+            document.getElementById("answer").style.visibility ="hidden";
+        });
+        document.getElementById("btnGo").addEventListener("click", function () {
+            var source = document.getElementById("source").value;
+            var converted = source.replace(/&/g,"&amp;");
+            source = source.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            source = source.replace(/\n/g, "<br>");
+            if (source.length == 0) {
+                alert("I don't see any code to convert")
+            } else {
+                document.getElementById("answer").style.visibility = "visible";
+                document.getElementById("converted").innerText = source;
+            }
+        });
+    </script>
+</body>
+
+</html>
